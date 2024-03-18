@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form Inputan dan Tabel</title>
+<style>
+    table {
+        border-collapse: collapse;
+        width: 50%;
+        margin-top: 20px;
+    }
+    table, th, td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+</head>
+<body>
+
+<h2>Form Inputan</h2>
+<form id="inputForm">
+    <label for="name">Name:</label><br>
+    <input type="text" id="name" name="name"><br><br>
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email"><br><br>
+    <label for="message">Message:</label><br>
+    <textarea id="message" name="message" rows="4" cols="50"></textarea><br><br>
+    <label for="salary">Gaji Pokok:</label><br>
+    <input type="number" id="salary" name="salary"><br><br>
+    <input type="button" value="Submit" onclick="submitForm()">
+</form>
+
+<h2>Output Tabel</h2>
+<table id="outputTable">
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Message</th>
+        <th>Gaji Bersih</th>
+    </tr>
+</table>
+
+<script>
+function submitForm() {
+    var form = document.getElementById("inputForm");
+    var name = form.elements["name"].value;
+    var email = form.elements["email"].value;
+    var message = form.elements["message"].value;
+    var salary = parseFloat(form.elements["salary"].value);
+
+    var table = document.getElementById("outputTable");
+    var newRow = table.insertRow(-1);
+    var cell1 = newRow.insertCell(0);
+    var cell2 = newRow.insertCell(1);
+    var cell3 = newRow.insertCell(2);
+    var cell4 = newRow.insertCell(3);
+    cell1.innerHTML = name;
+    cell2.innerHTML = email;
+    cell3.innerHTML = message;
+
+    // Hitung gaji bersih
+    var gajiBersih;
+    var pajak = 0.05;
+    if (salary >= 1000000) {
+        gajiBersih = salary * (1 - pajak);
+    } else {
+        var tunjangan;
+        if (salary < 1000000) {
+            tunjangan = salary * 0.15;
+        } else if (salary >= 1000000 && salary < 2000000) {
+            tunjangan = salary * 0.25;
+        } else {
+            tunjangan = salary * 0.35;
+        }
+        gajiBersih = salary + tunjangan;
+    }
+
+    cell4.innerHTML = gajiBersih.toFixed(2);
+
+    // Reset form
+    form.reset();
+}
+</script>
+<a href="logout.php">Logout</a>
+</body>
+</html>
